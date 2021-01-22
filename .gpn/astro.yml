@@ -35,6 +35,5 @@ jobs:
   go-build:
     runs-on: 'ubuntu:latest'
     steps:
-      - run: |
-          go vet ./...
-          go build ./...
+      - run: 'go vet ./...'
+      - run: 'go build ./...'
