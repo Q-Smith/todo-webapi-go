@@ -1,2 +1,39 @@
----
+# https://docs.github.com/en/actions/reference/events-that-trigger-workflows
+name: gha_to_jac
 version: 0.1
+
+# You can provide a single event string, array of events, array of event types, or an event configuration map
+on:
+  # on.<push|pull_request>.<branches|tags>
+  # branches or branches-ignore
+  #   - You cannot use both the branches and branches-ignore filters for the same event in a workflow.
+  # tags or tags-ignore
+  #   - You cannot use both the tags and tags-ignore filters for the same event in a workflow
+  push:
+    branches:
+      - main
+    branches-ignore:
+      - 'features/*'
+  pull_request:
+    types: [assigned, opened, synchronize, reopened]
+    branches:
+      - main
+
+# A map of environment variables that are available to the steps of all jobs in the workflow
+env:
+  SERVER: production
+
+# defaults.run
+# A map of default settings that will apply to all jobs in the workflow. 
+defaults:
+  run:
+    shell: bash
+    working-directory: scripts
+
+# jobs.<job_id>
+jobs:
+  go-build:
+    runs-on: 'ubuntu:latest'
+    steps:
+      - run: 'go vet ./...'
+      - run: 'go build ./...'
