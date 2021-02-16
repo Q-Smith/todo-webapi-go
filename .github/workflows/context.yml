@@ -2,7 +2,7 @@
 
 name: ContextCheck
 
-on: push
+on: [push, workflow_dispatch]
 
 jobs:
   one:
